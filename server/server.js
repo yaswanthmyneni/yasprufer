@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8001;
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["https://oj-project.netlify.app", "http://localhost:5173"],
     credentials: true,
   }),
 );
@@ -28,7 +28,12 @@ app.use("/problem", problemRouter);
 app.use("/compile", compileRouter);
 app.use("/ai", aiRouter);
 
-connectToDB();
-app.listen(PORT, () => {
-  console.log(`Server is up and running on port: ${PORT}`);
-});
+connectToDB()
+  .then(() => {
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("DB connection failed:", err);
+  });

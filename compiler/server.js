@@ -10,6 +10,8 @@ app.use(express.json());
 app.post("/run", compileCode);
 app.post("/submit", runTestCases);
 
-app.listen(6000, () => {
-  console.log("Compile service running on port 6000");
+const PORT = process.env.COMPILER_PORT || 6000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Compile service running on port ${PORT}`);
 });
