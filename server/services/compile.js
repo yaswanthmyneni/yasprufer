@@ -1,4 +1,5 @@
 import axios from "axios";
+import "dotenv/config";
 
 const COMPILE_BASE_URL =
   process.env.COMPILE_URL || `${process.env.COMPILER_URL}`;
