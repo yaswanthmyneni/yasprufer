@@ -27,8 +27,8 @@ userRouter.get("/logout", logout);
  * @path /user/dashboard
  */
 // Protected route
-userRouter.get("/dashboard", (req, res) => {
-  res.json({ msg: "Welcome", user: true });
+userRouter.get("/dashboard", auth, (req, res) => {
+  res.json({ msg: "Welcome", user: req.user });
 });
 
 export { userRouter };
