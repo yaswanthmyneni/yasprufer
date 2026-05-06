@@ -44,10 +44,13 @@ const login = async (req, res) => {
 
     const token = user.generateJWT();
 
+    const isProd = process.env.NODE_ENV === "production";
+
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
+      domain: isProd ? ".onilnejudge.site" : undefined,
     });
 
     res.json({
