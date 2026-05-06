@@ -13,10 +13,6 @@ const testCaseSchema = new mongoose.Schema({
 
 const problemSchema = new mongoose.Schema(
   {
-    author: {
-      type: String,
-      required: true,
-    },
     title: {
       type: String,
       required: true,
@@ -25,6 +21,15 @@ const problemSchema = new mongoose.Schema(
     },
     statement: {
       type: String,
+      required: true,
+    },
+    constraints: {
+      type: String,
+      required: true,
+    },
+    difficulty: {
+      type: String,
+      enum: ["easy", "medium", "hard"],
       required: true,
     },
     sampleInput: {

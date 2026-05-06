@@ -7,7 +7,7 @@ const ProblemsList = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const goToProduct = (id) => {
+  const goToProblem = (id) => {
     navigate(`/problem/${id}`);
   };
 
@@ -40,13 +40,13 @@ const ProblemsList = () => {
       {problems?.length === 0 ? (
         <p className="text-gray-600">No problems found</p>
       ) : (
-        <div className="overflow-x-auto bg-white shadow-lg rounded-xl">
+        <div className="overflow-x-auto bg-white shadow-lg">
           <table className="w-full text-left border-collapse">
             <thead className="bg-gray-200 text-gray-700">
               <tr>
                 <th className="p-3">Title</th>
-                <th className="p-3">Author</th>
                 <th className="p-3">Statement</th>
+                <th className="p-3">Difficulty</th>
               </tr>
             </thead>
 
@@ -54,21 +54,31 @@ const ProblemsList = () => {
               {problems?.map((problem) => (
                 <tr
                   key={problem._id}
-                  className="border-t hover:bg-gray-50 transition"
+                  className="border-t hover:bg-gray-50 transition cursor-pointer"
+                  onClick={() => goToProblem(problem._id)}
                 >
                   <td className="p-3 font-medium text-blue-600">
                     {problem.title}
                   </td>
 
-                  <td className="p-3 text-gray-700">{problem.author}</td>
-
-                  <td
-                    className="p-3 text-gray-600 cursor-pointer"
-                    onClick={() => goToProduct(problem._id)}
-                  >
+                  <td className="p-3 text-gray-600">
                     {problem.statement.length > 100
                       ? problem.statement.substring(0, 100) + "..."
                       : problem.statement}
+                  </td>
+
+                  <td className="p-3">
+                    <span
+                      className={`px-2 py-1 rounded text-sm font-semibold ${
+                        problem.difficulty === "easy"
+                          ? "bg-green-100 text-green-700"
+                          : problem.difficulty === "medium"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-red-100 text-red-700"
+                      }`}
+                    >
+                      {problem.difficulty}
+                    </span>
                   </td>
                 </tr>
               ))}

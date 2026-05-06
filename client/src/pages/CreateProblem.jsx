@@ -3,16 +3,17 @@ import axios from "axios";
 
 const CreateProblem = () => {
   const [form, setForm] = useState({
-    author: "",
     title: "",
     statement: "",
+    constraints: "",
+    difficulty: "easy",
     sampleInput: "",
     sampleOutput: "",
   });
 
-  const [testcases, setTestcases] = useState([
-    { input: "", output: "", isHidden: false },
-  ]);
+  const [testcases, setTestcases] = useState([{ input: "", output: "" }]);
+
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,7 +26,7 @@ const CreateProblem = () => {
   };
 
   const addTestcase = () => {
-    setTestcases([...testcases, { input: "", output: "", isHidden: false }]);
+    setTestcases([...testcases, { input: "", output: "" }]);
   };
 
   const removeTestcase = (index) => {
@@ -36,6 +37,26 @@ const CreateProblem = () => {
   const handleCreateProblem = async (e) => {
     e.preventDefault();
 
+    let newErrors = {};
+
+    if (!form.title.trim()) newErrors.title = true;
+    if (!form.statement.trim()) newErrors.statement = true;
+    if (!form.constraints.trim()) newErrors.constraints = true;
+    if (!form.sampleInput.trim()) newErrors.sampleInput = true;
+    if (!form.sampleOutput.trim()) newErrors.sampleOutput = true;
+
+    testcases.forEach((tc, i) => {
+      if (!tc.input.trim()) newErrors[`tc-input-${i}`] = true;
+      if (!tc.output.trim()) newErrors[`tc-output-${i}`] = true;
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/problem/create`,
@@ -43,16 +64,14 @@ const CreateProblem = () => {
           ...form,
           testcases,
         },
-        {
-          withCredentials: true,
-        },
+        { withCredentials: true },
       );
-      alert("Problem created successfully!");
-      // TODO: replace console.log's
+
       console.log(res.data);
+      alert("problem created successfully!");
     } catch (err) {
       console.error(err);
-      alert("Error creating problem");
+      alert("error while creating a problem!");
     }
   };
 
@@ -65,19 +84,13 @@ const CreateProblem = () => {
 
         <form onSubmit={handleCreateProblem} className="space-y-4">
           <input
-            name="author"
-            placeholder="Author"
-            value={form.author}
-            onChange={handleChange}
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-
-          <input
             name="title"
             placeholder="Title"
             value={form.title}
             onChange={handleChange}
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+              errors.title ? "border-red-500" : "border-gray-300"
+            }`}
           />
 
           <textarea
@@ -86,8 +99,32 @@ const CreateProblem = () => {
             value={form.statement}
             onChange={handleChange}
             rows={4}
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+              errors.statement ? "border-red-500" : "border-gray-300"
+            }`}
           />
+
+          <textarea
+            name="constraints"
+            placeholder="Constraints (e.g. 1 <= n <= 10^5)"
+            value={form.constraints}
+            onChange={handleChange}
+            rows={3}
+            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+              errors.constraints ? "border-red-500" : "border-gray-300"
+            }`}
+          />
+
+          <select
+            name="difficulty"
+            value={form.difficulty}
+            onChange={handleChange}
+            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2"
+          >
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
 
           <textarea
             name="sampleInput"
@@ -95,7 +132,9 @@ const CreateProblem = () => {
             value={form.sampleInput}
             onChange={handleChange}
             rows={3}
-            className="w-full border rounded-lg p-2 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full border rounded-lg p-2 font-mono ${
+              errors.sampleInput ? "border-red-500" : "border-gray-300"
+            }`}
           />
 
           <textarea
@@ -104,7 +143,9 @@ const CreateProblem = () => {
             value={form.sampleOutput}
             onChange={handleChange}
             rows={3}
-            className="w-full border rounded-lg p-2 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full border rounded-lg p-2 font-mono ${
+              errors.sampleOutput ? "border-red-500" : "border-gray-300"
+            }`}
           />
 
           <h3 className="text-lg font-semibold mt-6">Testcases</h3>
@@ -121,7 +162,11 @@ const CreateProblem = () => {
                   handleTestcaseChange(index, "input", e.target.value)
                 }
                 rows={3}
-                className="w-full border rounded-lg p-2 font-mono focus:outline-none focus:ring-2 focus:ring-green-500"
+                className={`w-full border rounded-lg p-2 font-mono ${
+                  errors[`tc-input-${index}`]
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
               />
 
               <textarea
@@ -131,21 +176,14 @@ const CreateProblem = () => {
                   handleTestcaseChange(index, "output", e.target.value)
                 }
                 rows={2}
-                className="w-full border rounded-lg p-2 font-mono focus:outline-none focus:ring-2 focus:ring-green-500"
+                className={`w-full border rounded-lg p-2 font-mono ${
+                  errors[`tc-output-${index}`]
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
               />
 
-              <div className="flex items-center justify-between">
-                <label className="flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={tc.isHidden}
-                    onChange={(e) =>
-                      handleTestcaseChange(index, "isHidden", e.target.checked)
-                    }
-                  />
-                  Hidden
-                </label>
-
+              <div className="flex items-center justify-end">
                 <button
                   type="button"
                   onClick={() => removeTestcase(index)}
