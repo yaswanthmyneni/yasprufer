@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8001;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://oj-project.netlify.app", "http://localhost:5173"],
+    origin: ["https://onilnejudge.site", "http://localhost:5173"],
     credentials: true,
   }),
 );
