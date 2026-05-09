@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
-  Dashboard,
   Login,
   CreateProblem,
   ProblemsList,
@@ -17,7 +16,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/create-problem" element={<CreateProblem />} />
         <Route path="/problem" element={<ProblemsList />} />
         <Route path="/problem/:id" element={<SingleProblem />} />
