@@ -76,8 +76,8 @@ const CreateProblem = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-start py-10">
-      <div className="w-full max-w-3xl bg-white shadow-lg rounded-xl p-6">
+    <div className="min-h-screen flex justify-center items-start py-10">
+      <div className="w-full max-w-3xl bg-gray-100 rounded-xl p-6">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">
           Create Problem
         </h2>
@@ -88,7 +88,7 @@ const CreateProblem = () => {
             placeholder="Title"
             value={form.title}
             onChange={handleChange}
-            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+            className={`w-full border rounded-lg p-2 bg-white focus:outline-none focus:ring-1 ${
               errors.title ? "border-red-500" : "border-gray-300"
             }`}
           />
@@ -99,7 +99,7 @@ const CreateProblem = () => {
             value={form.statement}
             onChange={handleChange}
             rows={4}
-            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+            className={`w-full border rounded-lg p-2 bg-white focus:outline-none focus:ring-1 ${
               errors.statement ? "border-red-500" : "border-gray-300"
             }`}
           />
@@ -110,7 +110,7 @@ const CreateProblem = () => {
             value={form.constraints}
             onChange={handleChange}
             rows={3}
-            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+            className={`w-full border rounded-lg p-2 bg-white focus:outline-none focus:ring-1 ${
               errors.constraints ? "border-red-500" : "border-gray-300"
             }`}
           />
@@ -119,7 +119,7 @@ const CreateProblem = () => {
             name="difficulty"
             value={form.difficulty}
             onChange={handleChange}
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2"
+            className="w-full cursor-pointer rounded-lg p-2 bg-white focus:outline-none"
           >
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
@@ -132,7 +132,7 @@ const CreateProblem = () => {
             value={form.sampleInput}
             onChange={handleChange}
             rows={3}
-            className={`w-full border rounded-lg p-2 font-mono ${
+            className={`w-full border rounded-lg p-2 bg-white focus:outline-none focus:ring-1 font-mono ${
               errors.sampleInput ? "border-red-500" : "border-gray-300"
             }`}
           />
@@ -143,7 +143,7 @@ const CreateProblem = () => {
             value={form.sampleOutput}
             onChange={handleChange}
             rows={3}
-            className={`w-full border rounded-lg p-2 font-mono ${
+            className={`w-full border rounded-lg p-2 bg-white focus:outline-none focus:ring-1 font-mono ${
               errors.sampleOutput ? "border-red-500" : "border-gray-300"
             }`}
           />
@@ -153,7 +153,7 @@ const CreateProblem = () => {
           {testcases.map((tc, index) => (
             <div
               key={index}
-              className="border rounded-lg p-4 bg-gray-50 space-y-3"
+              className="rounded-lg p-4 bg-white space-y-3"
             >
               <textarea
                 placeholder="Input"
@@ -162,7 +162,7 @@ const CreateProblem = () => {
                   handleTestcaseChange(index, "input", e.target.value)
                 }
                 rows={3}
-                className={`w-full border rounded-lg p-2 font-mono ${
+                className={`w-full border rounded-lg p-2 bg-white focus:outline-none focus:ring-1 font-mono ${
                   errors[`tc-input-${index}`]
                     ? "border-red-500"
                     : "border-gray-300"
@@ -176,7 +176,7 @@ const CreateProblem = () => {
                   handleTestcaseChange(index, "output", e.target.value)
                 }
                 rows={2}
-                className={`w-full border rounded-lg p-2 font-mono ${
+                className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-1 font-mono ${
                   errors[`tc-output-${index}`]
                     ? "border-red-500"
                     : "border-gray-300"
@@ -187,7 +187,7 @@ const CreateProblem = () => {
                 <button
                   type="button"
                   onClick={() => removeTestcase(index)}
-                  className="text-red-500 hover:text-red-700 text-sm"
+                  className="text-red-500 cursor-pointer hover:text-red-700 text-sm"
                 >
                   Remove
                 </button>
@@ -198,14 +198,14 @@ const CreateProblem = () => {
           <button
             type="button"
             onClick={addTestcase}
-            className="w-full bg-gray-200 hover:bg-gray-300 rounded-lg py-2"
+            className="w-full bg-gray-200 cursor-pointer hover:bg-gray-300 rounded-lg py-2"
           >
             + Add Testcase
           </button>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white rounded-lg py-2 hover:bg-blue-700 transition"
+            className="w-full bg-blue-600 text-white cursor-pointer rounded-lg py-2 hover:bg-blue-700 transition"
           >
             Create Problem
           </button>

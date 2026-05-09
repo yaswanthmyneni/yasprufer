@@ -190,7 +190,7 @@ Analyze this code and provide:
       <div>
         <button
           onClick={handleRun}
-          className="w-[20rem] border border-blue-500 bg-gray-100 py-2 rounded hover:border-blue-600 transition cursor-pointer"
+          className="w-[20rem] border border-black-500 py-2 rounded hover:border-blue-600 transition cursor-pointer"
         >
           Run
         </button>

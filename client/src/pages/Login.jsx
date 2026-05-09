@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center items-center mt-[10rem]">
+    <section className="min-h-[80vh] flex flex-col justify-center items-center">
       <h1 className="text-3xl font-semibold mb-6 text-gray-800">Login</h1>
       <form className="flex flex-col ">
         <input
@@ -49,7 +49,7 @@ const Login = () => {
         </button>
         <button
           onClick={() => navigate("/register")}
-          className="w-[20rem] cursor-pointer border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition duration-200"
+          className="w-[20rem] cursor-pointer border border-gray-400 py-2 rounded-lg"
         >
           Signup
         </button>

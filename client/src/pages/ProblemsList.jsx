@@ -34,7 +34,7 @@ const ProblemsList = () => {
   if (loading) return <h2>Loading...</h2>;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-[80vh] p-6">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">All Problems</h2>
 
       {problems?.length === 0 ? (

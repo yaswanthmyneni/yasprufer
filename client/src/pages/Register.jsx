@@ -27,10 +27,10 @@ const Register = () => {
   };
 
   return (
-    <form className="min-h-screen flex items-center justify-center bg-gray-100">
+    <form className="min-h-[80vh] flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
-          Register
+          Sign Up
         </h2>
 
         <input
@@ -51,7 +51,7 @@ const Register = () => {
           onClick={(e) => handleSignup(e)}
           className="bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
         >
-          Register
+          Sign Up
         </button>
       </div>
     </form>
