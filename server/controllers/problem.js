@@ -29,11 +29,16 @@ const createProblem = async (req, res) => {
 const getProblems = async (req, res) => {
   try {
     const problems = await Problem.find().sort({ createdAt: -1 });
+    const problemsWithoutTestcases = problems.map((problem) => {
+      const obj = problem.toObject();
+      delete obj.testcases;
+      return obj;
+    });
 
     res.status(200).json({
       success: true,
       count: problems.length,
-      problems,
+      problems: problemsWithoutTestcases,
     });
   } catch (error) {
     res.status(500).json({
@@ -42,7 +47,6 @@ const getProblems = async (req, res) => {
     });
   }
 };
-
 
 /**
  * @method GET
@@ -60,6 +64,7 @@ const getProductById = async (req, res) => {
         message: "Problem not found",
       });
     }
+    problem.testcases = [];
 
     res.status(200).json({
       success: true,
