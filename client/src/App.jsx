@@ -7,16 +7,23 @@ import {
   SingleProblem,
   Home,
 } from "./pages";
-import { Footer, Header } from "./components";
+import { Footer, Header, ProtectedRoute } from "./components";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/create-problem" element={<CreateProblem />} />
+        <Route
+          path="/create-problem"
+          element={
+            <ProtectedRoute>
+              <CreateProblem />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/problem" element={<ProblemsList />} />
         <Route path="/problem/:id" element={<SingleProblem />} />
         <Route path="/" element={<Home />} />
@@ -24,6 +31,6 @@ function App() {
       <Footer />
     </BrowserRouter>
   );
-}
+};
 
 export default App;

@@ -4,6 +4,7 @@ import {
   getProblems,
   getProductById,
 } from "../controllers/problem.js";
+import { auth } from "../middleware/auth.js";
 
 const problemRouter = new Router();
 
@@ -11,7 +12,7 @@ const problemRouter = new Router();
  * @method POST
  * @path /problem/create
  */
-problemRouter.post("/create", createProblem);
+problemRouter.post("/create", auth, createProblem);
 
 /**
  * @method GET

@@ -9,7 +9,7 @@ const auth = (req, res, next) => {
     req.user = decoded;
     next();
   } catch {
-    res.status(401).json({ msg: "Invalid token" });
+    res.status(401).json({ msg: "Token expired" });
   }
 };
 

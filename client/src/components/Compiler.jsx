@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import { CodeModal } from "./CodeModal";
+import { api } from "../api";
+import { AuthContext } from "../context/AuthContext";
+import { AuthModal } from "./AuthModal";
 
 const Compiler = ({ problemId }) => {
+  const { user } = useContext(AuthContext);
   const [code, setCode] = useState(`// C++ program
 #include <iostream>
 using namespace std;
@@ -18,6 +22,7 @@ int main() {
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [analysis, setAnalysis] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const handleLanguage = (e) => {
     setLanguage(e.target.value);
@@ -106,15 +111,17 @@ int main() {
   };
 
   const handleAnalyze = async () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
     if (!code.trim()) return;
 
     try {
       setAnalyzing(true);
 
-      const res = await axios.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/ai/code-analysis`,
-        {
-          prompt: `
+      const res = await api.post(`/ai/code-analysis`, {
+        prompt: `
 Language: ${language}
 
 Code:
@@ -125,8 +132,7 @@ Analyze this code and provide:
 - Bugs (if any)
 - Improvements
 `,
-        },
-      );
+      });
 
       setAnalysis(res.data.reply);
       setShowAnalysis(true);
@@ -172,6 +178,10 @@ Analyze this code and provide:
           {output}
         </pre>
       )}
+      <AuthModal
+        showAuthModal={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
       <CodeModal
         analysis={showAnalysis ? analysis : null}
         onClose={() => setShowAnalysis(false)}

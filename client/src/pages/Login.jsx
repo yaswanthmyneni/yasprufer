@@ -1,28 +1,21 @@
-import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { api } from "../api";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
+  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_BASE_URL}/user/login`,
-      form,
-      {
-        withCredentials: true,
-      },
-    );
-    const res2 = await axios.get(
-      `${import.meta.env.VITE_SERVER_BASE_URL}/user/dashboard`,
-      {
-        withCredentials: true,
-      },
-    );
-    if (res2.data.user) {
-      navigate("/dashboard");
+    try {
+      const res = await api.post("/user/login", form);
+      setUser(res.data.user);
+      navigate("/");
+    } catch (err) {
+      alert("Invalid credentials");
     }
   };
 

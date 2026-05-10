@@ -34,6 +34,7 @@ const signup = async (req, res) => {
  */
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password)
 
   try {
     const user = await User.findOne({ email });
@@ -51,22 +52,28 @@ const login = async (req, res) => {
       secure: isProd,
       sameSite: isProd ? "none" : "lax",
       domain: isProd ? ".onilnejudge.site" : undefined,
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.json({
+    return res.status(200).json({
+      message: "Login successful",
       user: {
         id: user._id,
         email: user.email,
       },
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
+/**
+ * @method GET
+ * @path /user/logout
+ */
 const logout = (req, res) => {
   res.clearCookie("token");
-  res.json({ msg: "User logged out!" });
+  res.json({ message: "User logged out!" });
 };
 
 export { signup, login, logout };
