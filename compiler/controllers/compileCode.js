@@ -43,9 +43,22 @@ const compileCode = async (req, res) => {
 
     res.json({ filePath, output });
   } catch (error) {
-    console.error("COMPILER ERROR:", error);
+    if (error.type === "TLE") {
+      return res.status(408).json({
+        success: false,
+        error: "Time Limit Exceeded",
+      });
+    }
+
+    if (error.type === "OUTPUT_LIMIT") {
+      return res.status(408).json({
+        success: false,
+        error: "Output Limit Exceeded",
+      });
+    }
 
     return res.status(500).json({
+      success: false,
       error: error.message || "Execution failed",
     });
   }

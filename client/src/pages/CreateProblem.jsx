@@ -67,7 +67,6 @@ const CreateProblem = () => {
         { withCredentials: true },
       );
 
-      console.log(res.data);
       alert("problem created successfully!");
     } catch (err) {
       console.error(err);

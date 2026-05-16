@@ -104,6 +104,9 @@ int main() {
         },
       );
 
+      if (data.output.constructor === Object) {
+        return setOutput(data.output.message);
+      }
       setOutput(data.output);
     } catch (error) {
       console.log(error?.response?.data || error.message);
