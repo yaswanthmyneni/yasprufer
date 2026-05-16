@@ -50,9 +50,39 @@ const getProblems = async (req, res) => {
 
 /**
  * @method GET
+ * @path /problem/internal/:id
+ */
+const getProblemWithTestcases = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const problem = await Problem.findById(id);
+
+    if (!problem) {
+      return res.status(404).json({
+        success: false,
+        message: "Problem not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: problem,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+/**
+ * @method GET
  * @path /problem/:id
  */
-const getProductById = async (req, res) => {
+const getProblemWithoutTestcases = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -79,4 +109,9 @@ const getProductById = async (req, res) => {
   }
 };
 
-export { createProblem, getProblems, getProductById };
+export {
+  createProblem,
+  getProblems,
+  getProblemWithTestcases,
+  getProblemWithoutTestcases,
+};

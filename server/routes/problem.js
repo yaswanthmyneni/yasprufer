@@ -2,7 +2,8 @@ import { Router } from "express";
 import {
   createProblem,
   getProblems,
-  getProductById,
+  getProblemWithoutTestcases,
+  getProblemWithTestcases,
 } from "../controllers/problem.js";
 import { auth } from "../middleware/auth.js";
 
@@ -24,6 +25,12 @@ problemRouter.get("/", getProblems);
  * @method GET
  * @path /problem/:id
  */
-problemRouter.get("/:id", getProductById);
+problemRouter.get("/:id", getProblemWithoutTestcases);
+
+/**
+ * @method GET
+ * @path /problem/internal/:id
+ */
+problemRouter.get("/internal/:id", getProblemWithTestcases);
 
 export { problemRouter };

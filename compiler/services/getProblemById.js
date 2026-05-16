@@ -2,7 +2,8 @@ import axios from "axios";
 
 const getProblemById = async (id) => {
   const SERVER_URL =
-    `${process.env.SERVER_URL}/problem` || `${process.env.SERVER_URL}/problem`;
+    `${process.env.SERVER_URL}/problem/internal` ||
+    `${process.env.SERVER_URL}/problem/internal`;
 
   try {
     const res = await axios.get(`${SERVER_URL}/${id}`, {
