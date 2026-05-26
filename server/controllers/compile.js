@@ -5,7 +5,7 @@ const compileRun = async (req, res) => {
     const response = await runCode(req.body);
     res.json(response.data);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err });
   }
 };
 
