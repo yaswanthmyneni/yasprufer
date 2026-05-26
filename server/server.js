@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8001;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://onilnejudge.site", "http://localhost:5173"],
+    origin: ["https://yasprufer.online", "http://localhost:5173"],
     credentials: true,
   }),
 );

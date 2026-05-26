@@ -23,7 +23,7 @@ const Header = () => {
         className="text-3xl text-gray-700 font-bold cursor-pointer"
         onClick={() => navigate("/")}
       >
-        Onilne Judge
+        Yasprufer
       </h1>
       <div className="flex items-center gap-6 text-lg">
         <p
