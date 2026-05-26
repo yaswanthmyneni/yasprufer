@@ -68,6 +68,15 @@ const CreateProblem = () => {
       );
 
       alert("problem created successfully!");
+      setForm({
+        title: "",
+        statement: "",
+        constraints: "",
+        difficulty: "easy",
+        sampleInput: "",
+        sampleOutput: "",
+      });
+      setTestcases([{ input: "", output: "" }]);
     } catch (err) {
       console.error(err);
       alert("error while creating a problem!");
@@ -150,10 +159,7 @@ const CreateProblem = () => {
           <h3 className="text-lg font-semibold mt-6">Testcases</h3>
 
           {testcases.map((tc, index) => (
-            <div
-              key={index}
-              className="rounded-lg p-4 bg-white space-y-3"
-            >
+            <div key={index} className="rounded-lg p-4 bg-white space-y-3">
               <textarea
                 placeholder="Input"
                 value={tc.input}

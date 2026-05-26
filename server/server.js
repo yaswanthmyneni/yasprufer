@@ -27,7 +27,6 @@ app.use("/user", userRouter);
 app.use("/problem", problemRouter);
 app.use("/compile", compileRouter);
 app.use("/ai", aiRouter);
-console.log("Node version:", process.version);
 
 connectToDB()
   .then(() => {
