@@ -50,7 +50,7 @@ const login = async (req, res) => {
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? "none" : "lax",
-      domain: isProd ? ".onilnejudge.site" : undefined,
+      domain: isProd ? ".yasprufer.online" : undefined,
       maxAge: 24 * 60 * 60 * 1000,
     });
 
